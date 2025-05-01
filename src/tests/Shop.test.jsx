@@ -16,6 +16,6 @@ describe("Shop", () => {
       ];
     });
     render(<Shop fetcherWithFetch={fetcherWithFetch} />);
-    expect(screen.getByTestId("testing").textContent).toMatch(/testtitle/i);
+    expect(screen.getByTestId("testing").innerText).toMatch(/testtitle/i);
   });
 });
