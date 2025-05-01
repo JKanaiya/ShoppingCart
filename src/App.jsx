@@ -1,6 +1,7 @@
-import { Link, useParams } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router";
 import ErrorPage from "./components/ErrorPage";
 import Home from "./components/Home";
+import React from "react";
 
 function App() {
   return (
