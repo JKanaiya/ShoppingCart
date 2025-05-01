@@ -1,15 +1,35 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useState } from "react";
+import Shop from "./Shop";
+import Cart from "./Cart";
+import fetcherWithFetch from "../fetcherWithFetch";
 
-function Home() {
+const Home = function () {
+  const [cartItems, setCartItems] = useState([]);
+
+  const addItemToCart = function (item) {
+    setCartItems([...cartItems, item]);
+  };
+
+  const editItemCount = function (item) {
+    const b = cartItems;
+    b.find((n) => n.id == item.id).count = item.count;
+    setCartItems(b);
+  };
+
+  const deleteItem = function (item) {
+    setCartItems(
+      cartItems.toSpliced(cartItems.findIndex((n) => n.id == item.id)),
+      1,
+    );
+  };
+
   return (
     <div>
       <h2>aaa</h2>
-      <Outlet />
-      <Link to="cart">Go to Cart</Link>
-      <Link to="shop">Go to Shop</Link>
+      <Shop addItemToCart={addItemToCart} fetcherWithFetch={fetcherWithFetch} />
+      <Cart editItemCount={editItemCount} deleteItem={deleteItem} />
     </div>
   );
-}
+};
 
 export default Home;
