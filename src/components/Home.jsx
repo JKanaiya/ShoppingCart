@@ -27,7 +27,11 @@ const Home = function () {
     <div>
       <h2>aaa</h2>
       <Shop addItemToCart={addItemToCart} fetcherWithFetch={fetcherWithFetch} />
-      <Cart editItemCount={editItemCount} deleteItem={deleteItem} />
+      <Cart
+        cartItems={cartItems}
+        editItemCount={editItemCount}
+        deleteItem={deleteItem}
+      />
     </div>
   );
 };

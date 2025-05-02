@@ -7,14 +7,16 @@ const cartItems = [
     id: 0,
     title: "TestTitle",
     description: "Jeans",
-    price: "Testing price",
+    price: 10,
+    count: 1,
     image: "Testing image",
   },
   {
     id: 1,
     title: "TestTitle2",
     description: "Coat",
-    price: "Testing price",
+    price: 12,
+    count: 2,
     image: "Testing image",
   },
 ];
@@ -28,5 +30,13 @@ describe("Cart", () => {
   it("Renders Cart Items when cartItems passed in", () => {
     render(<Cart cartItems={cartItems} />);
     expect(screen.getByText(/testtitle2/i)).toBeInTheDocument();
+  });
+  it("Doesnt render a price if the cart is empty", () => {
+    render(<Cart cartItems={[]} />);
+    expect(screen.queryByRole("priceTotal")).not.toBeInTheDocument();
+  });
+  it("Renders the price based on the items in the cart and their count", () => {
+    render(<Cart cartItems={cartItems} />);
+    expect(screen.queryByText(34)).toBeInTheDocument();
   });
 });
