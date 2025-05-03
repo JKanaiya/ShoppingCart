@@ -3,8 +3,8 @@ import Shop from "./Shop";
 import Cart from "./Cart";
 import fetcherWithFetch from "../fetcherWithFetch";
 
-const Home = function () {
-  const [cartItems, setCartItems] = useState([]);
+const Home = function ({ initialItems = [] }) {
+  const [cartItems, setCartItems] = useState(initialItems);
 
   const addItemToCart = function (item) {
     setCartItems([...cartItems, item]);

@@ -13,7 +13,7 @@ const Cart = function ({ cartItems }) {
         ))
       )}
       {cartItems.length != 0 && (
-        <h3>
+        <h3 role="priceTotal">
           {
             cartItems.reduce(
               (previous, current) => ({
