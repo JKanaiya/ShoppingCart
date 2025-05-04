@@ -1,4 +1,4 @@
-export const Cart = function ({ cartItems }) {
+const Cart = function ({ cartItems }) {
   return (
     <div>
       {cartItems.length == 0 ? (
@@ -14,8 +14,8 @@ export const Cart = function ({ cartItems }) {
       )}
       {cartItems.length != 0 && (
         <h3 role="priceTotal">
-          {
-            cartItems.reduce(
+          {cartItems
+            .reduce(
               (previous, current) => ({
                 count: 1,
                 price:
@@ -26,10 +26,12 @@ export const Cart = function ({ cartItems }) {
                 count: 1,
                 price: 0,
               },
-            ).price
-          }
+            )
+            .price.toFixed(2)}
         </h3>
       )}
     </div>
   );
 };
+
+export default Cart;
