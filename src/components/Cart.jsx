@@ -1,4 +1,4 @@
-const Cart = function ({ cartItems }) {
+export const Cart = function ({ cartItems }) {
   return (
     <div>
       {cartItems.length == 0 ? (
@@ -33,5 +33,3 @@ const Cart = function ({ cartItems }) {
     </div>
   );
 };
-
-export default Cart;

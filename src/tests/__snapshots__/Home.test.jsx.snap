@@ -6,10 +6,10 @@ exports[`Home Component > Renders the Home Page 1`] = `
     <h2>
       aaa
     </h2>
-    <div />
     <div>
-      Cart
+      Shop
     </div>
+    <div />
   </div>
 </div>
 `;
