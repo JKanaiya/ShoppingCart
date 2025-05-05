@@ -11,6 +11,7 @@ const StyLink = styled(Link)`
   cursor: pointer;
   min-height: 50px;
   place-items: center;
+  max-width: 40%;
   &:hover {
     transform: translateY(-1px);
   }
