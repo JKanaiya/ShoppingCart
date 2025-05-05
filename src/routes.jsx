@@ -14,6 +14,11 @@ const routes = [
     element: <Home />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "home/:name",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
 ];
 
 export default routes;

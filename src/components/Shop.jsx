@@ -1,14 +1,13 @@
 import useSWR from "swr";
-import styled from "styled-components";
 import { Card } from "./styles/Card.styled.js";
 import { Img } from "./styles/Img.styled.js";
 import { Button } from "./styles/Button.styled.js";
+import useSWRImmutable from "swr/immutable";
+import CardContainer from "./styles/CardContainer.styled.js";
+import styled from "styled-components";
 
-const CardContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  background-color: gray;
-  grid-gap: 5px;
+const ShopStyle = styled.div`
+  padding: 1%;
 `;
 
 const Shop = function ({ searchQuery, fetcherWithFetch, addItemToCart }) {
@@ -16,20 +15,51 @@ const Shop = function ({ searchQuery, fetcherWithFetch, addItemToCart }) {
     data,
     error,
     isLoading: loading,
-  } = useSWR("https://fakestoreapi.com/products", fetcherWithFetch);
+  } = useSWRImmutable("https://fakestoreapi.com/products", fetcherWithFetch);
   const query = new RegExp(searchQuery, "i");
   return (
-    <CardContainer>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error = {error}</div>}
-      {data &&
-        data.map((product) => {
-          if (searchQuery) {
-            return (
-              (product.description.search(query) !== -1 ||
-                product.title.search(query) !== -1) && (
+    <ShopStyle>
+      <CardContainer>
+        {loading && <div>Loading...</div>}
+        {error && <div>Error = {error}</div>}
+        {data &&
+          data.map((product) => {
+            if (searchQuery) {
+              return (
+                (product.description.search(query) !== -1 ||
+                  product.title.search(query) !== -1) && (
+                  <Card key={product.id}>
+                    <h4>{product.title}</h4>
+                    <Img src={product.image} alt={product.description} />
+                    <input
+                      type="number"
+                      placeholder={product.count}
+                      id={product.id}
+                      min={1}
+                    ></input>
+                    <p>Price: {product.price}</p>
+                    <Button
+                      onClick={() => {
+                        console.log(document.getElementById(product.id));
+                        addItemToCart({
+                          ...product,
+                          count: Number(
+                            document.getElementById(product.id).value == 0
+                              ? product.count
+                              : document.getElementById(product.id).value,
+                          ),
+                        });
+                      }}
+                    >
+                      Add to Cart
+                    </Button>
+                  </Card>
+                )
+              );
+            } else {
+              return (
                 <Card key={product.id}>
-                  <h3>{product.title}</h3>
+                  <h4>{product.title}</h4>
                   <Img src={product.image} alt={product.description} />
                   <input
                     type="number"
@@ -37,49 +67,27 @@ const Shop = function ({ searchQuery, fetcherWithFetch, addItemToCart }) {
                     id={product.id}
                     min={0}
                   ></input>
-                  <p>Price: {product.price}</p>
                   <Button
                     onClick={() =>
                       addItemToCart({
                         ...product,
                         count: Number(
-                          document.getElementById(product.id).value,
+                          document.getElementById(product.id).value == 0
+                            ? product.count
+                            : document.getElementById(product.id).value,
                         ),
                       })
                     }
                   >
                     Add to Cart
                   </Button>
+                  <p>Price: {product.price}</p>
                 </Card>
-              )
-            );
-          } else {
-            return (
-              <Card key={product.id}>
-                <h3>{product.title}</h3>
-                <Img src={product.image} alt={product.description} />
-                <input
-                  type="number"
-                  placeholder={product.count}
-                  id={product.id}
-                  min={0}
-                ></input>
-                <Button
-                  onClick={() =>
-                    addItemToCart({
-                      ...product,
-                      count: Number(document.getElementById(product.id).value),
-                    })
-                  }
-                >
-                  Add to Cart
-                </Button>
-                <p>Price: {product.price}</p>
-              </Card>
-            );
-          }
-        })}
-    </CardContainer>
+              );
+            }
+          })}
+      </CardContainer>
+    </ShopStyle>
   );
 };
 

@@ -4,8 +4,14 @@ import Cart from "./Cart";
 import fetcherWithFetch from "../fetcherWithFetch";
 import Navigation from "./Navigation";
 import GlobalStyle from "./styles/GlobalStyle";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
 
-const Home = function ({ initialItems = [] }) {
+const HomeStyle = styled.div`
+  padding: 1%;
+`;
+
+const Home = function ({ initialItems = [], initPage }) {
   const [cartItems, setCartItems] = useState(initialItems);
 
   const addItemToCart = function (item) {
@@ -14,12 +20,10 @@ const Home = function ({ initialItems = [] }) {
       : setCartItems([...cartItems, item]);
   };
 
-  const editItemCount = function (item, opt) {
+  const editItemCount = function (item, val) {
     const b = cartItems;
-    opt == 1
-      ? b.find((n) => n.id == item.id).count++
-      : b.find((n) => n.id == item.id).count--;
-    setCartItems(b);
+    b.find((i) => i.id == item.id).count = val;
+    setCartItems([...b]);
   };
 
   const [searchQuery, setSearchQuery] = useState(null);
@@ -33,20 +37,31 @@ const Home = function ({ initialItems = [] }) {
     );
   };
 
+  const { name } = useParams();
+
   return (
     <div>
       <GlobalStyle />
       <Navigation cartItems={cartItems} setSearchQuery={setSearchQuery} />
-      <Shop
-        addItemToCart={addItemToCart}
-        fetcherWithFetch={fetcherWithFetch}
-        searchQuery={searchQuery}
-      />
-      <Cart
-        cartItems={cartItems}
-        editItemCount={editItemCount}
-        deleteItem={deleteItem}
-      />
+      {initPage ? (
+        <Cart
+          cartItems={cartItems}
+          editItemCount={editItemCount}
+          deleteItem={deleteItem}
+        />
+      ) : name == "cart" ? (
+        <Cart
+          cartItems={cartItems}
+          editItemCount={editItemCount}
+          deleteItem={deleteItem}
+        />
+      ) : (
+        <Shop
+          addItemToCart={addItemToCart}
+          fetcherWithFetch={fetcherWithFetch}
+          searchQuery={searchQuery}
+        />
+      )}
     </div>
   );
 };

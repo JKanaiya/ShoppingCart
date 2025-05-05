@@ -7,7 +7,7 @@ const fetcherWithFetch = vi.fn(() => {
   return [
     {
       id: 0,
-      title: "TestTitle",
+      title: "TestTitleJeans",
       description: "Jeans",
       price: "Testing price",
       image: "Testing image",
@@ -25,7 +25,7 @@ describe("Shop", () => {
   it("Renders a card with the desired format", async () => {
     await act(async () => render(<Shop fetcherWithFetch={fetcherWithFetch} />));
     expect(
-      screen.getByRole("heading", { name: "TestTitle" }),
+      screen.getByRole("heading", { name: "TestTitleJeans" }),
     ).toBeInTheDocument();
   });
   it("Only shows items with descriptions that contain the searchQuery", async () => {
@@ -35,5 +35,6 @@ describe("Shop", () => {
       ),
     );
     expect(screen.queryByText(/coat/i)).not.toBeInTheDocument();
+    expect(await screen.findByText(/Jeans/i)).toBeInTheDocument();
   });
 });

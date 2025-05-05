@@ -1,13 +1,15 @@
-import { BrowserRouter, Link } from "react-router";
 import ErrorPage from "./components/ErrorPage";
-import Home from "./components/Home";
 import React from "react";
+import Navigation from "./components/Navigation";
+import GlobalStyle from "./components/styles/GlobalStyle";
+import StyLink from "./components/styles/StyLink.styled";
 
 function App() {
   return (
     <div>
-      <h2>aaa</h2>
-      <Link to="home">Find Home</Link>
+      <GlobalStyle />
+      <Navigation />
+      <StyLink to="home">Shop!</StyLink>
     </div>
   );
 }

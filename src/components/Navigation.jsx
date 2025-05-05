@@ -5,14 +5,36 @@ import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import Input from "./styles/Input.styled";
 import { Button } from "./styles/Button.styled";
+import StyLink from "./styles/StyLink.styled";
+import { useParams } from "react-router-dom";
 
 const StyledNavigate = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 2%;
   background-color: #aa6da3;
-  border-radius: 20px;
   color: white;
+  position: relative;
+  margin-bottom: 30px;
+  @media (max-width: 800px) {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: safe center;
+    flex-direction: column;
+  }
+`;
+
+const NavIcon = styled(Icon)`
+  position: absolute;
+  right: -3%;
+  bottom: 5%;
+  @media (max-width: 800px) {
+    bottom: 30%;
+  }
+  @media (max-width: 500px) {
+    right: -10%;
+    bottom: 37%;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -21,6 +43,7 @@ const SearchContainer = styled.div`
   max-height: 50px;
   border-radius: 15px;
   position: relative;
+  max-width: 40%;
 `;
 const SearchIcon = styled(IoSearch)`
   color: #404040;
@@ -33,6 +56,7 @@ const SearchButton = styled(Button)`
   transform: none;
 `;
 const Navigation = function ({ cartItems = [], setSearchQuery }) {
+  const { name } = useParams();
   return (
     <StyledNavigate>
       <h1>!Shopping</h1>
@@ -47,9 +71,14 @@ const Navigation = function ({ cartItems = [], setSearchQuery }) {
           Search
         </SearchButton>
       </SearchContainer>
+      {name == "cart" ? (
+        <StyLink to="/home">Go to Shop</StyLink>
+      ) : (
+        <StyLink to="cart">Go to Cart</StyLink>
+      )}
       {cartItems.length !== 0 ? (
         <div>
-          <Icon>
+          <NavIcon>
             <RiShoppingCartLine />
             <Circle>
               {
@@ -63,13 +92,13 @@ const Navigation = function ({ cartItems = [], setSearchQuery }) {
                 ).count
               }
             </Circle>
-          </Icon>
+          </NavIcon>
         </div>
       ) : (
         <div>
-          <Icon>
+          <NavIcon>
             <RiShoppingCartLine />
-          </Icon>
+          </NavIcon>
         </div>
       )}
     </StyledNavigate>
