@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 const Circle = styled.span`
-  border-radius: 50%;
+  border-radius: 10px;
   height: 30px;
   width: 30px;
   display: flex;
-  background-color: black;
+  background-color: #1b998b;
   color: white;
   position: absolute;
-  transform: translateY(55px);
+  transform: translateY(40px);
   place-items: center;
   justify-content: center;
 `;
