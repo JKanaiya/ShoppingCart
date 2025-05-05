@@ -40,7 +40,6 @@ const Shop = function ({ searchQuery, fetcherWithFetch, addItemToCart }) {
                     <p>Price: {product.price}</p>
                     <Button
                       onClick={() => {
-                        console.log(document.getElementById(product.id));
                         addItemToCart({
                           ...product,
                           count: Number(
