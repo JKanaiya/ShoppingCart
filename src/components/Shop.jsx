@@ -25,30 +25,33 @@ const Shop = function ({ searchQuery, fetcherWithFetch, addItemToCart }) {
       {data &&
         data.map((product) => {
           if (searchQuery) {
-            (product.description.search(query) ||
-              product.title.search(query)) != -1 && (
-              <Card key={product.id}>
-                <h3>{product.title}</h3>
-                <Img src={product.image} alt={product.description} />
-                <input
-                  type="number"
-                  name=""
-                  placeholder={product.count}
-                  id=""
-                  min={0}
-                ></input>
-                <p>Price: {product.price}</p>
-                <Button
-                  onClick={() =>
-                    addItemToCart({
-                      ...product,
-                      count: Number(document.getElementById(product.id).value),
-                    })
-                  }
-                >
-                  Add to Cart
-                </Button>
-              </Card>
+            return (
+              (product.description.search(query) !== -1 ||
+                product.title.search(query) !== -1) && (
+                <Card key={product.id}>
+                  <h3>{product.title}</h3>
+                  <Img src={product.image} alt={product.description} />
+                  <input
+                    type="number"
+                    placeholder={product.count}
+                    id={product.id}
+                    min={0}
+                  ></input>
+                  <p>Price: {product.price}</p>
+                  <Button
+                    onClick={() =>
+                      addItemToCart({
+                        ...product,
+                        count: Number(
+                          document.getElementById(product.id).value,
+                        ),
+                      })
+                    }
+                  >
+                    Add to Cart
+                  </Button>
+                </Card>
+              )
             );
           } else {
             return (
@@ -57,7 +60,6 @@ const Shop = function ({ searchQuery, fetcherWithFetch, addItemToCart }) {
                 <Img src={product.image} alt={product.description} />
                 <input
                   type="number"
-                  name=""
                   placeholder={product.count}
                   id={product.id}
                   min={0}

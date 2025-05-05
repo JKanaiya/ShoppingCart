@@ -3,6 +3,7 @@ import Shop from "./Shop";
 import Cart from "./Cart";
 import fetcherWithFetch from "../fetcherWithFetch";
 import Navigation from "./Navigation";
+import GlobalStyle from "./styles/GlobalStyle";
 
 const Home = function ({ initialItems = [] }) {
   const [cartItems, setCartItems] = useState(initialItems);
@@ -21,6 +22,8 @@ const Home = function ({ initialItems = [] }) {
     setCartItems(b);
   };
 
+  const [searchQuery, setSearchQuery] = useState(null);
+
   const deleteItem = function (item) {
     setCartItems(
       cartItems.toSpliced(
@@ -32,8 +35,13 @@ const Home = function ({ initialItems = [] }) {
 
   return (
     <div>
-      <Navigation cartItems={cartItems} />
-      <Shop addItemToCart={addItemToCart} fetcherWithFetch={fetcherWithFetch} />
+      <GlobalStyle />
+      <Navigation cartItems={cartItems} setSearchQuery={setSearchQuery} />
+      <Shop
+        addItemToCart={addItemToCart}
+        fetcherWithFetch={fetcherWithFetch}
+        searchQuery={searchQuery}
+      />
       <Cart
         cartItems={cartItems}
         editItemCount={editItemCount}
